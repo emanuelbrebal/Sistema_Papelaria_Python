@@ -7,14 +7,14 @@ cursor = conexao.cursor()
 #CREATE PRODUCT
 def insert_product(name, price):
     cursor.execute("""
-        INSERT INTO products(name, price) VALUES (?, ?)
+        INSERT INTO products(prod_name, prod_price) VALUES (?, ?)
     """, [name, price])
     conexao.commit()
 
 #UTILIZAR PARA ALIMENTAR A FUNÇÃO E CHAMAR NO ARQUIVO MAIN
-new_product = str(input("Digite seu email: "))
-new_price = float(input("Digite sua senha: "))
-insert_product(new_product, new_price)
+#new_product = str(input("Digite seu email: "))
+#new_price = float(input("Digite sua senha: "))
+#insert_product(new_product, new_price)
 
 #READ PRODUCT
 def list_products():
@@ -24,15 +24,30 @@ def list_products():
     print(all_products)
 
 #UTILIZAR QUANDO FOR CHAMAR A FUNÇÃO DE LISTAR PRODUTOS 
-list_products()
+#list_products()
 
 #READ USER BY ID
-def list_products_ByID(user_ID):
+def list_products_ByID(prod_ID):
     products_ByID= cursor.execute("""
         SELECT * FROM products WHERE prod_ID = ?
-    """, [user_ID]).fetchone()
+    """, [prod_ID]).fetchone()
     print(products_ByID)
 
-#UTILIZAR QUANDO FOR CHAMAR A FUNÇÃO DE LISTAR USUÁRIOS
-new_ID = int(input("Digite o ID do produto: "))
-list_products_ByID(new_ID)
+#UTILIZAR QUANDO FOR CHAMAR A FUNÇÃO DE LISTAR PRODUTOS
+#new_ID = int(input("Digite o ID do produto que deseja visualizar: "))
+#list_products_ByID(new_ID)
+
+#UPDATE PRODUCTS BY ID
+def update_product_ByID(prod_name, prod_price, prod_ID):
+    new_product = cursor.execute("""
+        UPDATE products SET prod_name = ?, prod_price = ? WHERE prod_ID = ?
+    """, [prod_name, prod_price, prod_ID])
+    conexao.commit()
+    print(new_product)
+    list_products()
+
+#UTILIZAR QUANDO FOR CHAMAR A FUNÇÃO DE ATUALIZAR PRODUTOS PELO ID
+#new_ID = int(input("Digite o ID do produto que deseja alterar: ")) 
+#new_name = str(input("Digite o novo nome do produto: "))  
+#new_price = int(input("Digite o novo preço do produto: "))  
+#update_product_ByID(new_name, new_price, new_ID)

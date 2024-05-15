@@ -44,3 +44,34 @@ def list_user_ByID(user_ID):
 def login(username, password):
     sql = "SELECT * FROM users WHERE username = ? AND password = ?"
     return cursor.execute(sql, [username, password]).fetchone()
+
+#UPDATE USERNAME BY ID (REFORMULAR IDEIA)
+def update_username_byID(user_ID):
+    print("\n---Autenticação---")
+    aut_username = str(input("Digite seu username: "))  
+    aut_password = str(input("Digite sua senha: "))  
+    autenticado = login(aut_username, aut_password)
+    if autenticado:
+        new_username = str("Digite o novo username: ")
+        cursor.execute("""
+            UPDATE users SET username = ? WHERE user_ID = ?
+        """, [new_username, user_ID])
+        print("Alteração realizada com sucesso.")
+    else: 
+        print("Acesso Negado.")
+
+#UTILIZAR QUANDO FOR CHAMAR A FUNÇÃO DE ATUALIZAR USERNAME PELO ID
+#new_ID = int(input("Digite o ID do usuário que deseja alterar: "))  
+#update_username_byID(new_ID)
+
+#UPDATE PASSWORD BY ID
+def update_password(prod_name, prod_price, prod_id):
+    cursor.execute("""
+        UPDATE products SET prod_name = ?, prod_price = ? WHERE prod_ID = ?
+    """, [prod_name, prod_price, prod_id])
+
+#UTILIZAR QUANDO FOR CHAMAR A FUNÇÃO DE ATUALIZAR PRODUTOS PELO ID
+#new_ID = int(input("Digite o ID do produto que deseja alterar: ")) 
+#new_name = str(input("Digite o novo nome do produto: "))  
+#new_price = int(input("Digite o novo preço do produto: "))  
+#update_product(new_name, new_price, new_ID)
